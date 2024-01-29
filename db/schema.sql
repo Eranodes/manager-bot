@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS invites (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    
+    sender_id INTEGER,
+    invitee_id INTEGER
+)
