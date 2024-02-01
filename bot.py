@@ -47,6 +47,9 @@ class ManagerBot(commands.Bot):
         )
 
     async def setup_hook(self) -> None:
+        # Set uptime values
+        self.up_for = discord.utils.utcnow()
+
         # Setup invite tracker
         self.invite_tracker = InviteTracker(self)
         await self.invite_tracker.set_invite_channel(INVITE_TRACKING_CHANNEL)
