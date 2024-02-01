@@ -23,7 +23,7 @@ from discord.ext import commands
 
 from bot import ManagerBot
 from .util.constants import EMOJIS
-from config import SUPPORT_ROLES, SOLVED_TAG, SUPPORT_FORUM
+from config import SOLVED_TAG, SUPPORT_FORUM
 
 
 class Support(commands.Cog):
@@ -58,7 +58,6 @@ class Support(commands.Cog):
         )
 
     @app_commands.command(name="solved")
-    @commands.has_any_role(*SUPPORT_ROLES)
     async def solved(self, interaction: discord.Interaction):
         """Marks the support thread as solved"""
         try:

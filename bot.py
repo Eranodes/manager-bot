@@ -29,6 +29,7 @@ COGS = [
     "cogs.invites",
     "cogs.dev",
     "cogs.support",
+    "cogs.suggestions",
 ]
 
 
