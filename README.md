@@ -1,8 +1,5 @@
 # EraNodes Manager
-
-## Overview
-
-This project is a manager bot for the [EraNodes Discord](https://discord.gg/9u6dJueQQ4) server.
+The Manager bot for the [EraNodes Discord](https://discord.gg/9u6dJueQQ4) server.
 
 ## Installation
 1. Clone the repository (`git clone https://github.com/Eranodes/Manager-Bot.git`)
@@ -27,6 +24,7 @@ SUGGESTIONS_FORUM = 123
 ACCEPTED_TAG = 123
 DENIED_TAG = 123
 ```
+---
 
 ## License
 This project is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.en.html)
