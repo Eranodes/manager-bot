@@ -30,6 +30,7 @@ COGS = [
     "cogs.dev",
     "cogs.support",
     "cogs.suggestions",
+    "cogs.error",
 ]
 
 
@@ -73,15 +74,23 @@ class ManagerBot(commands.Bot):
             except Exception as e:
                 print(f"Failed to load extension {ext}: {e}")
 
-        print(f"Loaded extensions: \n> {'\n> '.join(loaded)}")
+        print(
+            f"----------------- ⚙️ Loaded Extensions ----------------- \n> {'\n> '.join(loaded)}",
+            f"--------------------------------------------------------",
+            f"\n",
+            sep="\n",
+        )
 
     async def on_ready(self):
         print(
-            f"<--- Ready --->",
+            f"\n",
+            f"----------------------- 🌟 Ready -----------------------",
             f"Logged in as {self.user} (ID: {self.user.id})",
             f"Seeing {len(self.guilds)} guilds",
             f"Python version: {sys.version}",
             f"discord.py {discord.__version__} | jishaku {jishaku.__version__}",
+            f"--------------------------------------------------------",
+            f"\n",
             sep="\n",
         )
 

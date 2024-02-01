@@ -19,41 +19,42 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
+from .util.constants import EMOJIS
+
 
 class UserWarn(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
+    @commands.is_owner()
+    @commands.command(name="siw")
+    async def service_interrupt_warn(
+        self, ctx: commands.Context, member: discord.Member, server_url: str
+    ):
+        # parse end of server url
+        server_id = server_url.split("/")[-1]
+        await member.send(
+            f"""
+🚨 **Server Suspension: Missing `hibernate.jar` Plugin**
 
-#     @commands.is_owner()
-#     @commands.command(name="siw")
-#     async def service_interrupt_warn(
-#         self, ctx: commands.Context, member: discord.Member, server_url: str
-#     ):
-#         # parse end of server url
-#         server_id = server_url.split("/")[-1]
-#         await member.send(
-#             f"""
-# 🚨 **Server Suspension: Missing `hibernate.jar` Plugin**
+Dear {member.mention},
 
-# Dear {member.mention},
+Your server ([{server_id}]({server_url})) has been suspended due to the missing `hibernate.jar` plugin.
+This plugin is crucial to maintain node performance.
 
-# Your server ([{server_id}]({server_url})) has been suspended due to the missing `hibernate.jar` plugin.
-# This plugin is crucial to maintain node performance.
+To resolve this issue and reactivate your server, contact support for assistance through:
+- A ticket here: <#1201061535200575599>
 
-# To resolve this issue and reactivate your server, contact support for assistance through:
-# - A ticket here: <#1201061535200575599>
+We understand the inconvenience this may cause and are here to assist you throughout this process.
+If you require any guidance or support, please don't hesitate to contact us.
 
-# We understand the inconvenience this may cause and are here to assist you throughout this process.
-# If you require any guidance or support, please don't hesitate to contact us.
+Thank you for your cooperation.
 
-# Thank you for your cooperation.
+Best regards,
+\\- __EraNodes Development & Maintenance Team__"""
+        )
 
-# Best regards,
-# \\- __EraNodes Development & Maintenance Team__"""
-#         )
-
-#         await ctx.message.add_reaction(EMOJIS["yes"])
+        await ctx.message.add_reaction(EMOJIS["yes"])
 
 
 async def setup(bot: commands.Bot):
