@@ -60,7 +60,9 @@ class InvitesPaginator(CustomPaginator):
             position = data[0] + 1
             sender, count = list(data[1].items())[0]
 
-            sender_mention = self.bot.get_user(sender).mention
+            _sender = self.bot.get_user(sender)
+
+            sender_mention = _sender.mention if _sender else "**<< User Left >>**"
 
             desc += f"`{position}.` {sender_mention}: **{count}** invites\n"
 

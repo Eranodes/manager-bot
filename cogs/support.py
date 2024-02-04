@@ -74,7 +74,7 @@ class Support(commands.Cog):
 
         await interaction.response.send_message(
             f"{interaction.user.mention} marked {interaction.channel.mention} as solved ✅",
-            ephemeral=True,
+            ephemeral=False,
         )
         await self.mark_as_solved(interaction.channel, interaction.user)
 
