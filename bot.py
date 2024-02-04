@@ -26,11 +26,13 @@ from config import DISCORD_TOKEN, INVITE_TRACKING_CHANNEL, OWNER_IDS
 from cogs.util.invite_tracker import InviteTracker
 
 COGS = [
-    "cogs.invites",
     "cogs.dev",
-    "cogs.support",
-    "cogs.suggestions",
     "cogs.error",
+    "cogs.invites",
+    "cogs.join_validation",
+    "cogs.suggestions",
+    "cogs.support",
+    "cogs.userwarn",
 ]
 
 
