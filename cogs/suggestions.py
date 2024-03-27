@@ -20,7 +20,6 @@ from discord import app_commands
 from discord.ext import commands
 
 from bot import ManagerBot
-from .util.constants import EMOJIS
 from config import SUGGESTIONS_FORUM, ACCEPTED_TAG, DENIED_TAG, SUPPORT_ROLES
 
 
@@ -33,34 +32,34 @@ class Suggestions(commands.Cog):
             return False
 
         return interaction.channel.parent_id == SUGGESTIONS_FORUM and any(
-            role.id in SUPPORT_ROLES for role in interaction.user.roles
+            role.id in SUPPORT_ROLES for role in interaction.user.roles  # type: ignore
         )
 
     async def mark_status(
         self,
+        user: discord.abc.User,
+        thread: discord.Thread,
         accepted=False,
-        thread: discord.Thread = None,
-        user: discord.abc.User = None,
     ):
         status_tag: int = ACCEPTED_TAG if accepted else DENIED_TAG
         tags = thread.applied_tags
 
         if not any(tag.id == status_tag for tag in tags):
-            tags.append(discord.Object(id=status_tag))
+            tags.append(discord.Object(id=status_tag))  # type: ignore
 
         await thread.edit(
             locked=True,
             archived=True,
             applied_tags=tags[:5],
-            reason=f"Marked as {'accepted' if accepted else 'denied'} by {user} (ID: {user.id})",
+            reason=f"[MANAGER] Marked as {'accepted' if accepted else 'denied'} by {user} (ID: {user.id})",
         )
 
     async def respond(self, accepted: bool, interaction: discord.Interaction):
         await interaction.response.send_message(
-            f"{interaction.user.mention} marked {interaction.channel.mention} as **{'accepted' if accepted else 'denied'}**",
+            f"{interaction.user.mention} marked {interaction.channel.mention} as **{'accepted' if accepted else 'denied'}**",  # type: ignore
         )
         await self.mark_status(
-            accepted=accepted, thread=interaction.channel, user=interaction.user
+            accepted=accepted, thread=interaction.channel, user=interaction.user  # type: ignore
         )
 
     @app_commands.command(name="accept")

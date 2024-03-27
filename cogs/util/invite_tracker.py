@@ -110,6 +110,8 @@ class InviteTracker:
         return data
 
     async def fetch_inviter(self, member):
+        if not member:
+            return None
         await asyncio.sleep(self.bot.latency)
         for new_invite in await member.guild.invites():
             for cached_invite in self._cache[member.guild.id].values():

@@ -7,3 +7,5 @@ config.py
 
 *.db
 *.db-*
+
+./test.dev.py

@@ -39,7 +39,7 @@ class InvitesPaginator(CustomPaginator):
         timeout=180,
         bot: ManagerBot,
     ) -> None:
-        self.bot = bot
+        self.bot: ManagerBot = bot
 
         super().__init__(
             entries=entries,
@@ -60,11 +60,11 @@ class InvitesPaginator(CustomPaginator):
             position = data[0] + 1
             sender, count = list(data[1].items())[0]
 
-            _sender = self.bot.get_user(sender)
+            _sender = self.target.guild.get_member(sender)
 
-            sender_mention = _sender.mention if _sender else "**<< User Left >>**"
+            sender_mention = _sender.display_name if _sender else "< User Left >"
 
-            desc += f"`{position}.` {sender_mention}: **{count}** invites\n"
+            desc += f"{position}. `@{sender_mention}`: **{count}** invites\n"
 
         return discord.Embed(
             title="EraNodes Invites Leaderboard",
@@ -85,6 +85,9 @@ class Invites(commands.GroupCog, name="invites"):
 
         async with self.bot.pool.acquire() as c:
             data = await c.fetchall("SELECT sender_id, invitee_id FROM invites")
+        if not data:
+            await interaction.followup.send("No invites found.")
+            return
 
         sender_invitations_count = {}
 
@@ -113,7 +116,7 @@ class Invites(commands.GroupCog, name="invites"):
 
     @app_commands.command(name="view")
     async def invites(
-        self, interaction: discord.Interaction, user: Optional[discord.Member]
+        self, interaction: discord.Interaction, user: Optional[discord.Member]  # type: ignore
     ):
         # numpy style docstrings
         """
@@ -121,7 +124,7 @@ class Invites(commands.GroupCog, name="invites"):
 
         """
         if not user:
-            user = interaction.user
+            user: discord.Member = interaction.user  # type: ignore
 
         async with self.bot.pool.acquire() as c:
             data = await c.fetchall(
@@ -195,9 +198,9 @@ class Invites(commands.GroupCog, name="invites"):
                 )
                 return
 
-            inviter = self.bot.get_user(data[1])
+            inviter: discord.User | None = self.bot.get_user(data[1])
             await self.invite_channel.send(
-                f"{EMOJIS['white_minus']} **{member.name}** left. They were invited by **{inviter.name}**.",
+                f"{EMOJIS['white_minus']} **{member.name}** left. They were invited by **{inviter.name}**.",  # type: ignore
             )
 
 

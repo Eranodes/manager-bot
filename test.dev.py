@@ -1,21 +1,39 @@
 import re
+from typing import Optional
 
 
-def strip_emojis(input_string):
-    # Define a regular expression pattern to match emojis
-    emoji_pattern = re.compile(
-        "["
-        "\U0001F600-\U0001F64F"  # emoticons
-        "\U0001F300-\U0001F5FF"  # symbols & pictographs
-        "\U0001F680-\U0001F6FF"  # transport & map symbols
-        "\U0001F1E0-\U0001F1FF"  # flags (iOS)
-        "]+",
-        flags=re.UNICODE,
-    )
-    # Replace emojis with an empty string
-    return emoji_pattern.sub(r"", input_string)
+class Member:
+    name = ""
+    display_name = ""
 
 
-# Test the function
-input_string = "Hello! 😀 How are you? 🌟🚀"
-print(strip_emojis(input_string))
+def validate_string(member: Member) -> Optional[str]:
+    input_str:str = member.display_name
+
+    # Remove leading symbols
+    bad_chars:str = "!@#$%^&*()_+-=[]{}`~|;:,.<>?/'\"\\"
+    cleaned_name: str = input_str.lstrip(bad_chars).strip()
+
+    # Remove emojis
+    cleaned_name: str = cleaned_name.encode("ascii", "ignore").decode("ascii").strip()
+
+    # Check if only contains letters of the English alphabet
+    no_symbols: str = "".join(c for c in cleaned_name if c not in bad_chars).strip()
+    if re.match("^[a-zA-Z0-9 ]+$", no_symbols):
+        if len(cleaned_name) <= 3:
+            return member.name
+
+        return cleaned_name
+    
+    return member.name
+
+
+mem = Member()
+mem.display_name = "! Iᴛᴢ Iɴᴠɪɴᴄɪʙʟᴇ"
+mem.name = "4dwdda"
+
+validated_string = validate_string(member=mem)
+if validated_string:
+    print("Validated string:", validated_string)
+else:
+    print("Invalid string.")

@@ -35,7 +35,7 @@ class Developer(commands.Cog, command_attrs=dict(hidden=True)):
         self.bot: ManagerBot = bot
 
     async def cog_before_invoke(self, ctx: commands.Context) -> bool:
-        return ctx.author.id in self.bot.owner_ids
+        return ctx.author.id in self.bot.owner_ids  # type: ignore
 
     @commands.group(name="dev", invoke_without_command=True)
     @commands.is_owner()

@@ -36,7 +36,7 @@ class Support(commands.Cog):
         if not isinstance(interaction.channel, discord.Thread):
             return False
 
-        permissions = interaction.channel.permissions_for(interaction.user)
+        permissions = interaction.channel.permissions_for(interaction.user)  # type: ignore
         return interaction.channel.parent_id == SUPPORT_FORUM and (
             permissions.manage_threads
             or interaction.channel.owner_id == interaction.user.id
@@ -48,13 +48,13 @@ class Support(commands.Cog):
         tags = thread.applied_tags
 
         if not any(tag.id == SOLVED_TAG for tag in tags):
-            tags.append(discord.Object(id=SOLVED_TAG))
+            tags.append(discord.Object(id=SOLVED_TAG))  # type: ignore
 
         await thread.edit(
             locked=True,
             archived=True,
             applied_tags=tags[:5],
-            reason=f"Marked as solved by {user} (ID: {user.id})",
+            reason=f"[MANAGER] Marked as solved by {user} (ID: {user.id})",
         )
 
     @app_commands.command(name="solved")

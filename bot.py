@@ -29,10 +29,11 @@ COGS = [
     "cogs.dev",
     "cogs.error",
     "cogs.invites",
-    "cogs.join_validation",
+    "cogs.validation",
     "cogs.suggestions",
     "cogs.support",
     "cogs.userwarn",
+    "cogs.banned",
 ]
 
 
@@ -87,7 +88,7 @@ class ManagerBot(commands.Bot):
         print(
             f"\n",
             f"----------------------- 🌟 Ready -----------------------",
-            f"Logged in as {self.user} (ID: {self.user.id})",
+            f"Logged in as {self.user} (ID: {self.user.id})",  # type: ignore
             f"Seeing {len(self.guilds)} guilds",
             f"Python version: {sys.version}",
             f"discord.py {discord.__version__} | jishaku {jishaku.__version__}",
